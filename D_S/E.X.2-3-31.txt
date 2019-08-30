@@ -1,0 +1,5 @@
+E.X.2-3-31
+
+Our task is to find the factors belong to both B and C. Besides, We should guarantee the time complexity is linear prospect.
+
+For achieve it, compared with formed method,we don't rather cycled scan the LinkList B than from the location that the last scan stay's.

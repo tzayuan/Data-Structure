@@ -1,0 +1,19 @@
+void MergeLinkList(LinkList *L1, LinkList *L2, LinkList *&L3);//2019年7月26日 22:08:02
+
+	free 出现异常;
+	s不重新malloc分配内存也异常混乱;
+
+//2019年8月1日 18:48:35
+每添加一个新的结点,需要重新进行malloc操作分配内存以给新结点分配内存
+
+void deleteAllNode2334_czy(LinkList *& h) {
+	//P49, 例2-3-34, 设计一个算法删除并释放以h为表头指针的单链表的所有结点.
+	//算法思路: 
+	LinkList * p = h, *q = p->next;
+	while (q != NULL) {
+		free(p);
+		p = q;
+		q = q->next;
+	}
+	free(p);
+	h = NULL;//h结点不是被free掉了么？？？
