@@ -1,4 +1,4 @@
-#pragma once
+#pragma once//保证头文件只被编译一次,防止某个头文件被多次include
 
 #include "pch.h"
 #include <cstdio>
