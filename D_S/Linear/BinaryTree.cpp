@@ -136,9 +136,11 @@ void CreateLBTNode(LBTNode *& b, char * str) {
 			else {
 				switch (k) {
 				case 1:
-					St[top]->lchild = p; break;
+					St[top]->lchild = p;
+					break;
 				case 2:
-					St[top]->rchild = p; break;
+					St[top]->rchild = p;
+					break;
 				}
 			}
 			break;
