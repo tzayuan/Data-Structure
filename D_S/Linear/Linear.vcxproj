@@ -152,6 +152,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="BinaryTree.h" />
     <ClInclude Include="CirculatingLinkList.h" />
     <ClInclude Include="DLinkList.h" />
     <ClInclude Include="LinkList.h" />
@@ -167,6 +168,7 @@
     <ClInclude Include="Tree.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BinaryTree.cpp" />
     <ClCompile Include="CirculatingDLinkList.cpp" />
     <ClCompile Include="CirculatingDLinkList.h" />
     <ClCompile Include="CirculatingLinkList.cpp" />

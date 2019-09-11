@@ -3,7 +3,7 @@
 #include "LinkList.h"
 
 void CreateListF(LinkList *& L, SqList L1, int n) {
-	//头插法建立单链表,从一个空表开始,读取顺序表a中的元素,生成新结点,将读取的数据存放到新结点的数据域中,然后将新结点插入到当前链表的表头上,知道结束为止.
+	//头插法建立单链表,从一个空表开始,读取顺序表a中的元素,生成新结点,将读取的数据存放到新结点的数据域中,然后将新结点插入到当前链表的表头上, 直到结束为止.
 	LinkList *s;
 	L = (LinkList *)malloc(sizeof(LinkList));//创建头结点
 	L->next = NULL;
