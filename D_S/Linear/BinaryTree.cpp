@@ -206,10 +206,19 @@ void DispLBTNode(LBTNode * b) {
 }
 
 LBTNode * CreateLBT1(char * pre, char * in, int n) {
+	//由前序序列和中序序列构造二叉树
+	//算法思路: pre存放先序序列, in存放中序序列,n为in中字符个数,本算法执行后返回构造的二叉链的根结点指针
 	LBTNode *s;
 	char *p;
 	int k;
 	if (n <= 0) return NULL;
-
+	s = (LBTNode *)malloc(sizeof(LBTNode));//创建二叉树结点*s
+	s->data = *pre;
+	for (p = in; p < in + n; p++) {//在中序序列中找等于*pre的位置k
+		if (*p == *pre) break;
+	}
+	k = p - in;
+	s->lchild = CreateLBT1(pre + 1, in, k);//递归构造左子树
+	s->rchild = CreateLBT1(pre + k + 1, p + 1, n - k - 1);//递归构造右子树
 	return s;
 }
