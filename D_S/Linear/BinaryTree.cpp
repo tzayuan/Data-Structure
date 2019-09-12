@@ -4,7 +4,7 @@ void PreOrder(LBTNode *b) {
 	//基于链式存储结构的二叉树的先序遍历的递归算法;
 	//算法思路:递归访问根结点, 左子树, 右子树.
 	if (b != NULL) {
-		printf_s("%d ", b->data);
+		printf_s("%c ", b->data);
 		PreOrder(b->lchild);
 		PreOrder(b->rchild);
 	}
@@ -21,7 +21,7 @@ void PreOrder1(LBTNode * b) {
 		St[top] = b;
 		while (top != -1) {
 			p = St[top--];
-			printf_s("%d ", p->data);
+			printf_s("%c ", p->data);
 			if (p->rchild != NULL) {
 				top++;
 				St[top] = p->rchild;
@@ -40,7 +40,7 @@ void InOrder(LBTNode * b) {
 	//算法思路:递归访问左子树, 根结点, 右子树.
 	if (b != NULL) {
 		InOrder(b->lchild);
-		printf_s("%d", b->data);
+		printf_s("%c", b->data);
 		InOrder(b->rchild);
 	}
 }
@@ -60,7 +60,7 @@ void InOrder1(LBTNode * b) {
 			if (top != -1) {//此时top的结点要么无左孩子要么左孩子(严格说是左孩子为根结点的子树)已遍历完,则此时即相当于已访问完当前结点的左子树,按照中序遍历的定义,输出top的结点即相当于输出完左孩子再输出的根结点
 				p = St[top];
 				top--;
-				printf_s("%d", p->data);
+				printf_s("%c", p->data);
 				p = p->rchild;
 			}
 		}
@@ -74,7 +74,7 @@ void PostOrder(LBTNode * b) {
 	if (b != NULL) {
 		PostOrder(b->lchild);
 		PostOrder(b->rchild);
-		printf_s("%d", b->data);
+		printf_s("%c", b->data);
 	}
 }
 
@@ -94,7 +94,7 @@ void PostOrder1(LBTNode * b) {
 			while (top != -1 && flag) {
 				b = St[top];
 				if (b->rchild == p) {
-					printf_s("%d", b->data);
+					printf_s("%c", b->data);
 					top--;
 					p = b;
 				}
@@ -147,4 +147,69 @@ void CreateLBTNode(LBTNode *& b, char * str) {
 		}
 		ch = str[++j];
 	}
+}
+
+LBTNode * FindNode(LBTNode * b, int x) {
+	//查找结点的算法
+	//算法思路: 采用先序遍历递归算法查找值为x的结点.找到后返回其指针,否则返回NULL.
+	LBTNode *p;
+	if (b == NULL) {
+		return NULL;
+	}
+	else if (b->data == x) {
+		return b;
+	}
+	else {
+		p = FindNode(b->lchild, x);
+		if (p != NULL) return p;
+		else return FindNode(b->rchild, x);
+	}
+}
+
+LBTNode * LchildNode(LBTNode * b) {
+	//查找左孩子结点的算法
+	//直接返回指向b结点的左孩子结点的指针
+	return b->lchild;
+}
+
+LBTNode * RchildNode(LBTNode * b) {
+	//查找右孩子结点的算法
+	//直接返回指向b结点的右孩子结点的指针
+	return b->rchild;
+}
+
+int LBTNodeDepth(LBTNode * b) {
+	//求二叉树的高度
+	int LchildDep, RchildDep;
+	if (b == NULL) return 0;
+	else {
+		LchildDep = LBTNodeDepth(b->lchild);
+		RchildDep = LBTNodeDepth(b->rchild);
+		return (LchildDep > RchildDep) ? (LchildDep + 1) : (RchildDep + 1);
+	}
+	return 0;
+}
+
+void DispLBTNode(LBTNode * b) {
+	if (b != NULL) {
+		printf_s("%c", b->data);
+		if (b->lchild != NULL || b->rchild != NULL) {
+			printf_s("(");
+			DispLBTNode(b->lchild);
+			if (b->rchild != NULL) {
+				printf_s(",");
+			}
+			DispLBTNode(b->rchild);
+			printf_s(")");
+		}
+	}
+}
+
+LBTNode * CreateLBT1(char * pre, char * in, int n) {
+	LBTNode *s;
+	char *p;
+	int k;
+	if (n <= 0) return NULL;
+
+	return s;
 }
