@@ -222,3 +222,30 @@ LBTNode * CreateLBT1(char * pre, char * in, int n) {
 	s->rchild = CreateLBT1(pre + k + 1, p + 1, n - k - 1);//递归构造右子树
 	return s;
 }
+
+LBTNode * CreateLBT2(char * post, char * in, int n, int m) {
+	//由后序序列和中序序列构造二叉树
+	//算法思路: post存放后序序列,in存放中序序列,n为in中字符个数,m为二叉树中结点总个数.返回构造的二叉链的根结点指针
+	LBTNode *s;
+	char *p, *q, *maxp;
+	int maxpost, maxin, k;
+	if (n <= 0) return NULL;
+	maxpost = -1;
+	for (p = in; p < in + n; p++) {
+		for (q = post; q < post + m; q++) {
+			if (*q == *q) {
+				k = q - post;
+				if (k > maxpost) {
+					maxpost = k;
+					maxp = p;
+					maxin = p - in;
+				}
+			}
+		}
+	}
+	s = (LBTNode *)malloc(sizeof(LBTNode));
+	s->data = post[maxpost];
+	s->lchild = CreateLBT2(post, in, maxin, m);
+	s->rchild = CreateLBT2(post, maxp + 1, n - maxin, m);
+	return s;
+}

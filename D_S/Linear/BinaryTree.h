@@ -31,3 +31,4 @@ int LBTNodeDepth(LBTNode *b);//2019Äê9ÔÂ12ÈÕ 21:43:56
 void DispLBTNode(LBTNode *b);
 
 LBTNode *CreateLBT1(char *pre, char *in, int n);
+LBTNode *CreateLBT2(char *post, char *in, int n, int m);
