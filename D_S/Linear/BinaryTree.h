@@ -14,6 +14,14 @@ typedef struct node {
 	struct node *rchild;
 }LBTNode;
 
+//线索二叉树的链式存储结构
+typedef struct node {
+	char data;//结点数据域
+	int ltag, rtag;//增加的线索标记
+	struct node *lchild;//左孩子或线索指针(指向前驱结点)
+	struct node *rchild;//右孩子或线索指针(指向其后继结点)
+}TBTNode;//线索树结点类型定义
+
 //二叉树的基本算法,非递归算法暂未掌握,涉及"利用栈消除递归"一节
 //前序遍历,中序遍历,后序遍历的递归算法及非递归算法
 void PreOrder(LBTNode *b);//2019年9月11日 20:20:16
@@ -32,3 +40,4 @@ void DispLBTNode(LBTNode *b);
 
 LBTNode *CreateLBT1(char *pre, char *in, int n);
 LBTNode *CreateLBT2(char *post, char *in, int n, int m);
+
