@@ -22,6 +22,14 @@ typedef struct node {
 	struct node *rchild;//右孩子或线索指针(指向其后继结点)
 }TBTNode;//线索树结点类型定义
 
+//哈夫曼树haffman tree
+typedef struct {
+	int data;//结点值
+	float weight;//权重
+	int parent;//双亲结点
+	int lchild;//左孩子结点
+	int rchild;//右孩子结点
+}HTNode;
 //二叉树的基本算法,非递归算法暂未掌握,涉及"利用栈消除递归"一节
 //前序遍历,中序遍历,后序遍历的递归算法及非递归算法
 void PreOrder(LBTNode *b);//2019年9月11日 20:20:16
@@ -40,4 +48,3 @@ void DispLBTNode(LBTNode *b);
 
 LBTNode *CreateLBT1(char *pre, char *in, int n);
 LBTNode *CreateLBT2(char *post, char *in, int n, int m);
-
