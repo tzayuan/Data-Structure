@@ -249,3 +249,34 @@ LBTNode * CreateLBT2(char * post, char * in, int n, int m) {
 	s->rchild = CreateLBT2(post, maxp + 1, n - maxin, m);
 	return s;
 }
+
+void CreateHT(HTNode ht[], int n) {
+	float min1, min2;
+	int lnode, rnode;
+	for (int i = 0; i < 2 * n - 1; i++) {
+		ht[i].parent = ht[i].lchild = ht[i].rchild = -1;
+	}
+	for (int i = n; i < 2 * n - 1; i++) {
+		min1 = min2 = 32767;
+		lnode = rnode = -1;
+		for (int k = 0; k <= i - 1; k++) {
+			if (ht[k].parent == -1) {
+				if (ht[k].weight < min1) {
+					min2 = min1;
+					lnode = rnode;
+					min1 = ht[k].weight;
+					lnode = k;
+				}
+				else if (ht[k].weight < min2) {
+					min2 = ht[k].weight;
+					rnode = k;
+				}
+			}
+		}
+		ht[lnode].parent = i;
+		ht[rnode].parent = i;
+		ht[i].weight = ht[lnode].weight + ht[rnode].weight;
+		ht[i].lchild = lnode;
+		ht[i].rchild = rnode;
+	}
+}
