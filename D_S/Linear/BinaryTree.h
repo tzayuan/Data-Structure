@@ -31,6 +31,12 @@ typedef struct {
 	int rchild;//右孩子结点
 }HTNode;
 
+//哈夫曼编码
+typedef struct {
+	char cd[MaxSize];
+	int start;
+}HCode;
+
 //二叉树的基本算法,非递归算法暂未掌握,涉及"利用栈消除递归"一节
 //前序遍历,中序遍历,后序遍历的递归算法及非递归算法
 void PreOrder(LBTNode *b);//2019年9月11日 20:20:16

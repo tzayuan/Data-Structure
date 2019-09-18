@@ -155,10 +155,12 @@
     <ClInclude Include="BinaryTree.h" />
     <ClInclude Include="CirculatingLinkList.h" />
     <ClInclude Include="DLinkList.h" />
+    <ClInclude Include="Graphs.h" />
     <ClInclude Include="LinkList.h" />
     <ClInclude Include="LinkQueue.h" />
     <ClInclude Include="LinkStack.h" />
     <ClInclude Include="LinkString.h" />
+    <ClInclude Include="Lists.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="SparseMatrix.h" />
     <ClInclude Include="SqList.h" />
