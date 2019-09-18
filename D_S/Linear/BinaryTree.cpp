@@ -254,27 +254,26 @@ void CreateHT(HTNode ht[], int n) {
 	float min1, min2;
 	int lnode, rnode;
 	for (int i = 0; i < 2 * n - 1; i++) {
-		ht[i].parent = ht[i].lchild = ht[i].rchild = -1;
+		ht[i].lchild = ht[i].rchild = ht[i].parent = -1;
 	}
 	for (int i = n; i < 2 * n - 1; i++) {
 		min1 = min2 = 32767;
 		lnode = rnode = -1;
 		for (int k = 0; k <= i - 1; k++) {
 			if (ht[k].parent == -1) {
-				if (ht[k].weight < min1) {
+				if (ht[k].weight < min1) {//保证了min1始终是两者中的最小值,min2是次小值
 					min2 = min1;
-					lnode = rnode;
+					rnode = lnode;
 					min1 = ht[k].weight;
 					lnode = k;
 				}
-				else if (ht[k].weight < min2) {
-					min2 = ht[k].weight;
+				else if (ht[k].weight < min2) {//对应比最小值大,但是比此时的次小值要小的情况
 					rnode = k;
+					min2 = ht[k].weight;
 				}
 			}
 		}
-		ht[lnode].parent = i;
-		ht[rnode].parent = i;
+		ht[lnode].parent = ht[rnode].parent = i;
 		ht[i].weight = ht[lnode].weight + ht[rnode].weight;
 		ht[i].lchild = lnode;
 		ht[i].rchild = rnode;
