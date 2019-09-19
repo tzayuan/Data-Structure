@@ -176,6 +176,7 @@
     <ClCompile Include="CirculatingLinkList.cpp" />
     <ClCompile Include="DLinkList.cpp" />
     <ClCompile Include="D_S.cpp" />
+    <ClCompile Include="Graphs.cpp" />
     <ClCompile Include="LinkList.cpp" />
     <ClCompile Include="LinkQueue.cpp" />
     <ClCompile Include="LinkStack.cpp" />
