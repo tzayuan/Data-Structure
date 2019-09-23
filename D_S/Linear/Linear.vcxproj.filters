@@ -63,6 +63,12 @@
     <ClInclude Include="Graphs.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Sort.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Search.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">

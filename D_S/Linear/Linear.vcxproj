@@ -162,6 +162,8 @@
     <ClInclude Include="LinkString.h" />
     <ClInclude Include="Lists.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="Search.h" />
+    <ClInclude Include="Sort.h" />
     <ClInclude Include="SparseMatrix.h" />
     <ClInclude Include="SqList.h" />
     <ClInclude Include="SqQueue.h" />
