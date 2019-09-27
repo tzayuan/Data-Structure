@@ -15,7 +15,7 @@ typedef struct node {
 }LBTNode;
 
 //线索二叉树的链式存储结构
-typedef struct node {
+typedef struct node1 {
 	char data;//结点数据域
 	int ltag, rtag;//增加的线索标记
 	struct node *lchild;//左孩子或线索指针(指向前驱结点)
