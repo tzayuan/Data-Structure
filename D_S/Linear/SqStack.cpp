@@ -89,6 +89,11 @@ void trans(char exp[], char postexp[]) {
 		postexp[j++] = opStack.data[opStack.top--];
 	}
 	postexp[j] = '\0';
+	/*int cusor = 0;
+	char cycleCh = postexp[cusor];
+	while (cycleCh != '\0') {
+		printf_s("%c", postexp[cusor++]);
+	}*/
 }
 
 float computeValue(char postexp[]) {

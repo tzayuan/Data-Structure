@@ -15,3 +15,6 @@ InSort_SqList* InitRandomSqList();//这里写的不好,用了static,对于结构体数组作为形
 void DispInitKey(InSort_SqList *R);
 
 void Bubble_Sort(InSort_SqList *R, int length);
+void Quick_Sort(InSort_SqList *R, int s, int t);
+void Insert_Sort(InSort_SqList *R, int length);
+void Shell_Sort(InSort_SqList *R, int length);
