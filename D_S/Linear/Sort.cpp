@@ -176,7 +176,6 @@ void Heap_Sort(InSort_SqList * R, int length) {
 	//再对每次规模减1的无序序列的根结点进行重新建堆,直至整个无序序列只剩下一个元素,即为首元素,
 	//因每次向有序序列添加的是当前无序序列的最大元素,因此此时无序序列的唯一一个元素必为关键字值最小的元素,堆排序完成.
 	InSort_SqList temp;
-	int i;
 	for (int i = length / 2 - 1; i >= 0; i--) {//从最后一个分支结点开始循环建立初始堆直至整个序列的根结点,使得整个序列所构成的完全二叉树所有分支结点均满足大根堆的性质(即所有分支结点均大于其左右孩子).
 		Sift(R, i, length - 1);
 	}
@@ -186,5 +185,55 @@ void Heap_Sort(InSort_SqList * R, int length) {
 		R[i] = temp;
 		//哪个分支结点变化了,则需要对哪个分支结点进行重新建堆过程,因上面将整个序列的根结点改变,因此对跟整个序列的结点进行重新堆调整
 		Sift(R, 0, i - 1);//关于i-1,以第一次为例,第一次交换根结点和最后一个结点后,最后一个结点成为有序区的第一个结点,也是有序区的最后一个结点,而建堆只对无序序列建堆,因此建堆的范围为0~i-1;
+	}
+}
+
+void Merge(InSort_SqList * R, int low, int mid, int high) {
+	//当前传入的序列结合low,mid,high的范围限定,便表示了要合并的两个相邻子序列,第一个子序列为R中下标为low~mid的元素,第二个子序列为R中下标为mid+1~high的元素.
+	//具体地,我们通过两个游标i和j分别从两个相邻子序列的第一个元素开始遍历,每次比较当前i和j所指向的元素,选出此次比较中i和j所指向的元素关键字值较大的
+	//	(特殊的,当此时i和j所指向的元素的关键字值相等时,则将等号的情况放在大于或小于任意一种里面即可,因为所编写的程序的执行规则限定只有当此时某游标所指向的元素添加至R1后该游标才向后移动,而另外一个游标,虽指向相同关键字值的元素,但由于未添加进R1,所以并不会移动)
+	//某一个游标遍历完它所在的子序列,即该子序列的所有元素已经全部添加至R1后,另一游标必定未遍历完它所在的子序列,即该子序列的元素还未全部添加至R1,因此将未遍历完的这个子序列剩余元素依次添加至R1即可,此时即完成了本趟归并排,即R中下标为low~high的部分已有序.
+	//最后将两个子序列归并有序后的序列R1依次复制回原R1即可.
+	InSort_SqList *R1;
+	int i = low, j = mid + 1, k = 0;
+	R1 = (InSort_SqList *)malloc((high - low + 1) * sizeof(InSort_SqList));
+	while (i <= mid && j <= high) {
+		if (R[i].key <= R[j].key) {
+			R1[k++] = R[i++];
+		}
+		else {
+			R1[k++] = R[j++];
+		}
+	}
+	while (i <= mid) {
+		R1[k++] = R[i++];
+	}
+	while (j <= high) {
+		R1[k++] = R[j++];
+	}
+	for (int i = low, k = 0; i <= high; k++, i++) {
+		R[i] = R1[k];
+	}
+}
+
+void MergePass(InSort_SqList * R, int subLength, int length) {
+	//
+	int i;
+	for (i = 0; i + 2 * subLength - 1 < length; i = i + 2 * subLength) {
+		Merge(R, i, i + subLength - 1, i + 2 * subLength - 1);
+	}
+	if (i + subLength - 1 < length) {
+		Merge(R, i, i + subLength - 1, length - 1);
+	}
+}
+
+void MergeSort(InSort_SqList * R, int length) {
+	//2路归并排序,【2】路的含义是每次将相邻的每【2】个子序列规模排序,【n】路归并为每次将相邻的【n】个子序列规模排序(需深入:n的选取限制及n的取值对时/空复杂度的影响等)
+	//最开始把length个元素看作length个有序序列,则每个有序序列的规模为1,每两个相邻的有序序列进行归并排序,则每两个规模为1的有序序列归并为一个规模为2的有序序列
+	//则第一趟归并完毕后,整个序列变成了相邻的规模为2的有序序列(未进行排序操作时,即便肉眼可见有序,从排序完成的角度来看,也认为是无序),对每一对相邻的规模为2的有序序列进行归并排序,则每两个规模为2的有序序列归并为一个规模为4的有序序列
+	//依次归并下去,使得每趟归并排序后有序子序列的规模变为原来的两倍(特殊的,可能存在最后一个有序子序列规模小于这个两倍的规模)
+	//直至最后一次整个序列分为两个有序子序列,则对这两个有序子序列进行Merge后,即完成了对整个序列的排序.
+	for (int subLength = 1; subLength < length; subLength = 2 * subLength) {
+		MergePass(R, subLength, length);
 	}
 }

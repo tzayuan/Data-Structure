@@ -12,7 +12,7 @@
 
 typedef int KeyType;
 typedef char Sort_ElemType[10];
-typedef struct{
+typedef struct Insort_SqList{
 	KeyType key;
 	Sort_ElemType data;
 }InSort_SqList;
@@ -33,5 +33,7 @@ void Select_Sort(InSort_SqList *R, int length);
 void Sift(InSort_SqList *R, int low, int high);
 void Heap_Sort(InSort_SqList *R, int length);
 	//归并排序算法
-
+void Merge(InSort_SqList *R, int low, int mid, int high);
+void MergePass(InSort_SqList *R, int subLength, int length);
+void MergeSort(InSort_SqList *R, int length);
 	//基数排序算法
