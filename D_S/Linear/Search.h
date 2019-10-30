@@ -32,7 +32,9 @@ int IdxSearch(IDX I, int IDXTableLength, SeqList R, int length, KeyType key);//2
 //树表的查找
 //二叉排序树(Binary sort tree,BST)、平衡二叉树(AVL树,AVL树得名于它的发明者G. M. Adelson-Velsky和E. M. Landis)、B-Tree、B+树
 //二叉排序树
+LBTNode *BSTSearch(LBTNode *bt, KeyType key) {
 
+}
 //对某二叉排序树的进行中序遍历,将得到一个key递增有序的序列
 
 
