@@ -66,3 +66,59 @@ int IdxSearch(IDX I, int IDXTableLength, SeqList R, int length, KeyType key) {
 	}
 	return -1;//对应索引表查找不成功的情况,确保所有情况都能够return.
 }
+
+LBTNode *BSTSearch(LBTNode *bt, KeyType key) {
+	//查找结点的算法
+	//算法思路:该二叉排序树采用二叉链式存储结构,从bt所指向的根结点开始递归遍历整颗二叉树,直至找到对应结点或直至叶子结点都不满足条件则返回NULL即未找到
+	//首先判断当前所遍历到的结点是否为NULL,若为NULL,则直接返回NULL,表示未找到关键字值为key的结点;
+	//若当前遍历结点的的关键字值等于所要查找的key值,则返回该结点,即查找到了关键字值为key的结点
+	//否则,若key值小于要当前遍历到的结点的关键字值,按照平衡二叉树的逻辑结构,递归该函数主体,bt为当前结点的左孩子结点;
+	//均不是以上情况,即key值大于当前遍历到的结点的关键字值,则递归该函数主体,bt为当前结点的右孩子结点;
+	if (bt == NULL) {
+		return NULL;
+	}
+	else if (bt->key == key) {
+		return bt;
+	}
+	else if (key < bt->key) {
+		return BSTSearch(bt->lchild, key);
+	}
+	else {
+		return BSTSearch(bt->rchild, key);
+	}
+}
+
+int LBTInsert(LBTNode *& p, KeyType key) {
+	//二叉排序树的结点插入算法
+	//平均时间复杂度为O(log2(n))
+	//算法思路:可以将插入过程看作一个遍历整个已知二叉排序树(或者一颗空树)直至该关键字该插入的逻辑位置,即某叶子结点的左孩子结点或右孩子结点(注意其实此时该孩子结点为NULL,是逻辑上应该插入的位置)
+	if (p == NULL) {
+		p = (LBTNode *)malloc(sizeof(LBTNode));//给指向NULL的指针赋值??好像是可以...那链表可以吗?考后需要测试验证.
+		p->key = key;
+		p->lchild = p->rchild = NULL;
+		return 1;
+	}
+	else if (key == p->key) {
+		return 0;
+	}
+	else if (key < p->key) {
+		return LBTInsert(p->lchild, key);
+	}
+	else {
+		return LBTInsert(p->rchild, key);
+	}
+}
+
+void CreateLBT(LBTNode *& bt, KeyType str[], int n) {
+	//二叉排序树的构造算法
+	//算法思路:首先置该二叉排序树的根结点为NULL,即为空树.利用LBTInsert函数将str数组的所有关键字值依次按照二叉排序树的逻辑结构依次插入结点到二叉排序树bt中
+	bt = NULL;
+	for (int i = 0; i < n; i++) {
+		LBTInsert(bt, str[i]);
+	}
+}
+
+int LBTDelete(LBTNode *& bt, KeyType key) {
+	//删除结点的算法
+	//平均时间复杂度为O(log2(n))
+}
