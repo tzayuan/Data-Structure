@@ -10,15 +10,14 @@
 //稳定的排序：直接插入排序、冒泡排序、归并排序
 //不稳定的排序：希尔排序、直接选择排序、堆排序、快速排序
 
-typedef int KeyType;
-typedef char Sort_ElemType[10];
+
+//结点的结构体定义
 typedef struct Insort_SqList{
 	KeyType key;
 	Sort_ElemType data;
 }InSort_SqList;
 
 InSort_SqList* InitRandomSqList();//这里写的不好,用了static,对于结构体数组作为形参和返回结构体数组的问题理解上不够清晰,需要理清思路
-
 void DispInitKey(InSort_SqList *R);
 
 //内排序算法

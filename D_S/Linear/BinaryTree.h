@@ -9,7 +9,8 @@ typedef int SBTree[MaxSize];
 
 //二叉树的链式存储结构
 typedef struct node {
-	char data;
+	KeyType key;
+	InfoType data;
 	struct node *lchild;
 	struct node *rchild;
 }LBTNode;

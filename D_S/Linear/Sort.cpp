@@ -2,6 +2,7 @@
 #include "Sort.h"
 
 InSort_SqList* InitRandomSqList() {
+	//初始化一个static结构体数组,并用指针RR返回该结构体数组
 	static InSort_SqList R[Sort_MAXITEM];//不加static的话只会返回第一个数值
 	for (int i = 0; i < Sort_MAXITEM; i++) {
 		int j = random(100);
@@ -12,6 +13,7 @@ InSort_SqList* InitRandomSqList() {
 }
 
 void DispInitKey(InSort_SqList *R) {
+	//将该R结构体数组的key值按照下标顺序依次打印.
 	for (int i = 0; i < Sort_MAXITEM; i++) {
 		printf_s("%3d ", R[i].key);
 	}
@@ -114,7 +116,7 @@ void Shell_Sort(InSort_SqList * R, int length) {
 	InSort_SqList temp;
 	while (gap > 0) {
 		//while里面的程序段与直接插入排序的程序段和思想基本一致,区别是希尔排序在向前比较时,不是一个一个向前比较,而是隔gap个元素比较一个,因此j每次不是减1,而是减gap.
-		//可以看出,当gap为1时,希尔排序与冒泡全过程则一致.
+		//可以看出,当gap为1时,希尔排序与冒泡全过程一致.
 		//	gap的意义,相当于把整个序列分成gap个子序列,对每个子序列进行直接插入排序.则i从gap开始向后遍历,保证每组子序列都会被直接排序到.
 		for (int i = gap; i < length; i++) {
 			temp = R[i];
