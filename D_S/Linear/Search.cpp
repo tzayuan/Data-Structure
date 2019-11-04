@@ -90,6 +90,7 @@ LBTNode *BSTSearch(LBTNode *bt, KeyType key) {
 
 int LBTInsert(LBTNode *& p, KeyType key) {
 	//二叉排序树的结点插入算法
+	//感觉答案写的不对,已自行修改.
 	//平均时间复杂度为O(log2(n))
 	//算法思路:可以将插入过程看作一个遍历整个已知二叉排序树(或者一颗空树)直至该关键字该插入的逻辑位置,即某叶子结点的左孩子结点或右孩子结点(注意其实此时该孩子结点为NULL,是逻辑上应该插入的位置)
 	if (p == NULL) {
@@ -109,16 +110,129 @@ int LBTInsert(LBTNode *& p, KeyType key) {
 	}
 }
 
+int LBTInsert_czy(LBTNode *& p, KeyType key) {
+	if (p == NULL) {//根据整个函数的算法逻辑,知只有当p为一颗空树时才进行此if内的操作
+		p = (LBTNode *)malloc(sizeof(LBTNode));
+		p->key = key;
+		p->lchild = p->rchild = NULL;
+	}
+	else if (p->key == key) {//即要插入的关键字的值在该二叉排序树中已有,则return 0;
+		return 0;
+	}
+	else if (p->key < key && p->lchild == NULL) {//key值小于当前结点的关键字值,且当前结点的左孩子指向NULL,则应该插入的位置为当前结点的左孩子,为新结点分配内存空间并进行相关赋值后,将该结点的左孩子指针指向该新结点,完成插入操作
+		LBTNode *Newnode;
+		Newnode = (LBTNode *)malloc(sizeof(LBTNode));
+		Newnode->key = key;
+		Newnode->lchild = Newnode->rchild = NULL;
+		p->lchild = Newnode;
+		return 1;
+	}
+	else if (p->key < key && p->lchild != NULL) {//key值小于当前结点的关键字值且当前结点的左孩子不为空,则继续沿当前结点的左孩子进行遍历
+		return LBTInsert_czy(p->lchild, key);
+	}
+	else if (p->key > key && p->rchild != NULL) {//key值大于当前结点的关键字值,且当前结点的右孩子指向NULL,则应该插入的位置为当前结点的右孩子,为新结点分配内存空间并进行相关赋值后,将该结点的右孩子指针指向该新结点,完成插入操作
+		return LBTInsert_czy(p->rchild, key);
+	}
+	else if (p->key > key && p->rchild == NULL) {//key值大于当前结点的关键字值且当前结点的右孩子不为空,则继续沿当前结点的右孩子进行遍历
+		LBTNode *Newnode;
+		Newnode = (LBTNode *)malloc(sizeof(LBTNode));
+		Newnode->key = key;
+		Newnode->lchild = Newnode->rchild = NULL;
+		p->rchild = Newnode;
+		return 1;
+	}
+}
+
 void CreateLBT(LBTNode *& bt, KeyType str[], int n) {
 	//二叉排序树的构造算法
 	//算法思路:首先置该二叉排序树的根结点为NULL,即为空树.利用LBTInsert函数将str数组的所有关键字值依次按照二叉排序树的逻辑结构依次插入结点到二叉排序树bt中
 	bt = NULL;
 	for (int i = 0; i < n; i++) {
-		LBTInsert(bt, str[i]);
+		LBTInsert_czy(bt, str[i]);
 	}
 }
 
 int LBTDelete(LBTNode *& bt, KeyType key) {
-	//删除结点的算法
+	//删除二叉排序树中关键字值为key的结点的算法
 	//平均时间复杂度为O(log2(n))
+	LBTNode *p = bt, *f;//p用以遍历整个二叉排序树,f指向当前遍历到的结点的双亲结点
+	LBTNode *f1, *r;//当被删除结点既有左子树又有右子树时需要用到
+	f = NULL;
+	while (p != NULL && p->key != key) {
+		f = p;
+		if (p->key < key) {
+			p = p->lchild;
+		}
+		else {
+			p = p->rchild;
+		}
+	}
+	//此时要么p == NULL,要么p为找到的关键字值为key的结点;
+	if (p == NULL) return 0;//未找到关键字值值为key的结点
+	else if (p->lchild == NULL) {//p为待删除结点,此时对应p无左孩子的情况
+		if (f == NULL) {//对应p为根结点且p无左孩子的情况
+			bt = p->rchild;//特殊情况若p也无右孩子,则相当于bt = NULL;
+			//free(p);
+		}
+		else if (p->rchild = NULL) {//对应p为叶子结点的情况
+			//free(p);
+		}
+		//除去上面两种情况,剩余情况为:1)p不为根结点;2)p为分支结点,即p有右子树无左子树,则根据该结点是其双亲结点的左孩子还是右孩子将其双亲结点的对应孩子结点指针指向该结点的右孩子结点,再释放该结点的内存空间.
+		else if (f->lchild == p) {//p为其双亲结点的左孩子,则将其双亲结点的左孩子指针指向该结点的左子树,并释放该结点
+			f->lchild = p->rchild;
+			//free(p);
+		}
+		else if (f->rchild == p) {//p为其双亲结点的右孩子,则将其双亲结点的右孩子指针指向该结点的右子树,并释放该结点
+			f->rchild = p->rchild;
+			//free(p);
+		}
+		free(p);
+	}
+	else if (p->rchild == NULL) {//p为待删除结点,此时对应p无右孩子的情况
+		if (f == NULL) {//对应p为根结点且p无右孩子的情况
+			bt = p->lchild;
+			//free(p);
+		}
+		else if (p->lchild == NULL) {//对应p结点为叶子结点的情况
+			//free(p);
+		}
+		//除去上面两种情况,剩余情况为:1)p不为根结点;2)p为分支结点,即p有左子树无右子树,则根据该结点是其双亲结点的左孩子还是右孩子将其双亲结点的对应孩子结点指针指向该结点的左孩子结点,再释放该结点的内存空间.
+		else if (f->lchild == p) {//p为其双亲结点的左孩子,则将其双亲结点的左孩子指针指向该结点的左子树,并释放该结点的内存空间
+			f->lchild = p->lchild;
+			//free(p);
+		}
+		else if (f->rchild == p) {//p为其双亲结点的右孩子,则将其双亲结点的右孩子指针指向该结点的左子树,并释放该结点的内存空间
+			f->rchild = p->lchild;
+			//free(p);
+		}
+		free(p);
+	}
+	else {//p为待删除结点,此时对应p既有左孩子,又有右孩子的情况
+		//此时有两种方案,1)将p结点的左子树的最右下结点*r替代*p结点;2)将p结点的右子树的最左下结点*r替代*p结点;此处采用第一种方案
+		f1 = p, r = p->lchild;//f1指向最右下结点的双亲结点,r用以从待删除结点的左孩子结点开始遍历,寻找待删除结点的左子树的最右下结点
+		while (r->rchild != NULL) {
+			f1 = r;
+			r = r->rchild;
+		}
+		//此时f1指向最右下结点的双亲结点,即为r的双亲结点;r指向待删除结点p的左子树的最右下结点,该最右下结点必定无右子树,但可能有左子树
+		if (f1->lchild == r) {//r为其双亲结点的左孩子
+			f1->lchild = r->lchild;
+		}
+		else if (f1->rchild == r) {
+			f1->rchild = r->lchild;
+		}
+		//接下来实现用*r 代替 *p
+		r->lchild = p->lchild;
+		r->rchild = p->rchild;
+		if (f == NULL) {//p的双亲结点为空,即p为根结点,则此时r为根结点
+			bt = r;
+		}
+		else if (f->lchild == p) {//p为其双亲结点的左孩子,则令其双亲结点的左孩子指针指向r,再释放p的内存空间
+			f->lchild = r;
+		}
+		else if (f->rchild == p) {//p为其双亲结点的右孩子,则令其双亲结点的右孩子指针指向r,再释放p的内存空间
+			f->rchild = r;
+		}
+		free(p);
+	}
 }

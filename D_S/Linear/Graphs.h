@@ -4,7 +4,6 @@
 constexpr auto MaxV = 200;
 
 typedef char ElemType;
-typedef int InfoType;
 
 //图的邻接矩阵表示法
 typedef struct Vertextype {

@@ -67,6 +67,11 @@ void InsertElem(LinkList *& L, int x, int i) {//因为可能是在一个空链表插入第一个
 	p->next = s;
 }
 
+void InsertInRear(LinkList *& L, int x) {
+	L = NULL;
+
+}
+
 void DispLinkList(LinkList * L) {
 	if (L == NULL) {//2019年8月3日 21:22:57 为了应对例2-3-34删掉了所有结点(包括头结点)而加的判断语句
 		printf_s("The LinkList is empty and have no head node.\n");
