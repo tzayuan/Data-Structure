@@ -143,12 +143,12 @@ int LBTInsert_czy(LBTNode *& p, KeyType key) {
 	}
 }
 
-void CreateLBT(LBTNode *& bt, KeyType str[], int n) {
+void CreateLBT(LBTNode *& bt, SqList str) {
 	//二叉排序树的构造算法
 	//算法思路:首先置该二叉排序树的根结点为NULL,即为空树.利用LBTInsert函数将str数组的所有关键字值依次按照二叉排序树的逻辑结构依次插入结点到二叉排序树bt中
 	bt = NULL;
-	for (int i = 0; i < n; i++) {
-		LBTInsert_czy(bt, str[i]);
+	for (int i = 0; i < str.length; i++) {
+		LBTInsert_czy(bt, str.data[i]);
 	}
 }
 
